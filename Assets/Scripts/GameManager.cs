@@ -9,18 +9,18 @@ public class GameManager
     static public GameManager Instance => _instance;
     GameManager() { } //コンストラクタ
     List<UpgradeData> _upgrades = new List<UpgradeData>();
-    int _countCookie = 0;
-    static public int CountCookie => _instance._countCookie;
+    long _countCookie = 0;
+    static public long CountCookie => _instance._countCookie;
     FactoryManager _factoryMan = null;
     static public FactoryManager Factory => _instance._factoryMan;
     static public List<UpgradeData> UpgradeInfo => _instance._upgrades;
 
-    static public void AddCookie(int num)
+    static public void AddCookie(long num)
     {
         _instance._countCookie += num; 
     }
 
-    static public void Purchase(ShopItemTable item, int cost)
+    static public void Purchase(ShopItemTable item, uint cost)
     {
         _instance._countCookie -= cost;
         switch (item.Type)
@@ -39,10 +39,10 @@ public class GameManager
     public void Load()
     {
         var save = LocalData.Load<SaveData>(Application.dataPath + "/save.json");
-        if (save == null)
-        {
-            save = new SaveData();
-        }
+        //if (save == null)
+        //{
+        //    save = new SaveData();
+        //}
 
         _countCookie = save.CookieNum;
 
@@ -59,7 +59,7 @@ public class GameManager
     public void Save()
     {
         SaveData save = new SaveData();
-        _factoryMan.Save(save);
+        //_factoryMan.Save(save);
         save.CookieNum = _countCookie;
         LocalData.Save<SaveData>(Application.dataPath + "/save.json", save);
     }
@@ -67,11 +67,11 @@ public class GameManager
     public void Legacy()
     {
         SaveData save = new SaveData();
-        int cc = _factoryMan.transform.childCount;
-        for (int i = 0; i < cc; ++i)
-        {
-            GameObject.Destroy(_factoryMan.transform.GetChild(i).gameObject);
-        }
+        //int cc = _factoryMan.transform.childCount;
+        //for (int i = 0; i < cc; ++i)
+        //{
+        //    GameObject.Destroy(_factoryMan.transform.GetChild(i).gameObject);
+        //}
         _countCookie = 0;
         save.CookieNum = _countCookie;
         LocalData.Save<SaveData>(Application.dataPath + "/save.json", save);
