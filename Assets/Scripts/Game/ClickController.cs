@@ -6,6 +6,7 @@ public class ClickController : MonoBehaviour//, IPointerEnterHandler, IPointerEx
 {
     [Tooltip("クリック（ボタン）で増えるクッキーの数")]
     [SerializeField] long _addClickNum = 1;
+    [SerializeField] long _maxCookie = 9999999999999;
     AudioSource _as;
     Animator _anim;
 
@@ -15,31 +16,18 @@ public class ClickController : MonoBehaviour//, IPointerEnterHandler, IPointerEx
         _as = GetComponent<AudioSource>();
     }
 
-
-    //public void OnPointerEnter(PointerEventData eventData)
-    //{
-    //    Debug.Log("クッキーです");
-        
-
-    //}
-
-    //public void OnPointerExit(PointerEventData eventData)
-    //{
-    //    Debug.Log("何もない1");
-    //}
-
-    void Update()
-    {
-        //ClickCookie();
-    }
-
     public void ClickCookie()
     {
+        if(GameManager.CountCookie >= _maxCookie)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             GameManager.AddCookie(_addClickNum);
             _anim.SetTrigger("Pressed");
-            _as.PlayOneShot(_as.clip); ;
+            _as.PlayOneShot(_as.clip);
         }
     }
 }
