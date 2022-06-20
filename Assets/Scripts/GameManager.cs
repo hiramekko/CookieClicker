@@ -10,9 +10,12 @@ public class GameManager
     GameManager() { } //コンストラクタ
     List<UpgradeData> _upgrades = new List<UpgradeData>();
     long _countCookie = 0;
-    static public long CountCookie => _instance._countCookie;
-    FactoryManager _factoryMan = null;
-    static public FactoryManager Factory => _instance._factoryMan;
+    //static public long CountCookie => _instance._countCookie;
+    static public long CountCookie 
+    { get { return _instance._countCookie; }
+    set{ _instance._countCookie = value; } }
+    StarManager _starManager = null;
+    static public StarManager Star => _instance._starManager;
     static public List<UpgradeData> UpgradeInfo => _instance._upgrades;
 
     static public void AddCookie(long num)
@@ -20,13 +23,13 @@ public class GameManager
         _instance._countCookie += num; 
     }
 
-    static public void Purchase(ShopItemTable item, uint cost)
+    static public void Purchase(ShopItemTable item, long cost)
     {
         _instance._countCookie -= cost;
         switch (item.Type)
         {
-            case ItemType.Factory:
-                _instance._factoryMan.Purchase(item.TargetId);
+            case ItemType.Star:
+                _instance._starManager.Purchase(item.TargetId);
                 break;
 
             case ItemType.Upgrade:
@@ -46,14 +49,14 @@ public class GameManager
 
         _countCookie = save.CookieNum;
 
-        var root = GameObject.Find("/Factory");
-        _factoryMan = root.GetComponent<FactoryManager>();
-        int cc = _factoryMan.transform.childCount;
+        var root = GameObject.Find("/Star");
+        _starManager = root.GetComponent<StarManager>();
+        int cc = _starManager.transform.childCount;
         for (int i = 0; i < cc; ++i)
         {
-            GameObject.Destroy(_factoryMan.transform.GetChild(i).gameObject);
+            GameObject.Destroy(_starManager.transform.GetChild(i).gameObject);
         }
-        _factoryMan.Setup(save.Factory);
+        _starManager.Setup(save.Star);
     }
 
     public void Save()
