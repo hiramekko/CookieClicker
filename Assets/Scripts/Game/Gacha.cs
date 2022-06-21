@@ -9,11 +9,13 @@ public class Gacha : MonoBehaviour
     //[SerializeField] ShopItemTable[] _shopCollection;
     [Tooltip("ガチャ1回回すのに必要なクッキーの個数")]
     [SerializeField] long _gachacookie = 10;
-    [Tooltip("確率")]
-    [SerializeField] int _probability;
+    int _probability;
     int number = 1;
     Vector3 state;
     AudioSource _as;
+    int bluePb = 60;
+    int redPb = 50;
+    int purplePb = 10;
 
     public void RandomCreate()
     {
@@ -21,7 +23,26 @@ public class Gacha : MonoBehaviour
         {
             return;
         }
-        number = Random.Range(0, _itemCollection.Length);
+
+        _probability = Random.Range(0, 100);
+        if(_probability < purplePb)
+        {
+            number = 3;
+        }
+        else if(_probability < redPb)
+        {
+            number = 2;
+        }
+        else if(_probability < bluePb)
+        {
+            number = 1;
+        }
+        else
+        {
+            number = 0;
+        }          
+        //number = Random.Range(0, _itemCollection.Length);
+
         state.x = Random.Range(-200, 1200);
         state.y = Random.Range(500, 800);
         state.z = Random.Range(0, 1200);
