@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 [Serializable]
-public class FactoryData
+public class StarData
 {
     public int Id;
     public int Level;
@@ -21,7 +21,7 @@ public class UpgradeData
 public class SaveData
 {
     public int GameVersion = 1;
-    public int CookieNum = 0;
-    public List<FactoryData> Factory = new List<FactoryData>(); //記録されたFactoryは保有している
-    public List<UpgradeData> Upgrade = new List<UpgradeData>(); //記録されたUpgradeは保有している
+    public long CookieNum = 0;
+    public List<StarData> Star = new List<StarData>();
+    public List<UpgradeData> Upgrade = new List<UpgradeData>();
 }

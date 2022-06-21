@@ -8,8 +8,8 @@ public class SequenceManager : MonoBehaviour
     {
         Load();
 
-        var shop = GameObject.Find("/Canvas/Shop");
-        var shopScript = shop.GetComponent<Shop>();
+        GameObject shop = GameObject.Find("/Canvas/Shop");
+        Shop shopScript = shop.GetComponent<Shop>();
         shopScript.Setup();
     }
 
