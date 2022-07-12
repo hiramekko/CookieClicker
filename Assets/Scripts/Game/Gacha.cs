@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gacha : MonoBehaviour
 {
@@ -13,9 +14,17 @@ public class Gacha : MonoBehaviour
     int number = 1;
     Vector3 state;
     AudioSource _as;
+    Button _button;
     int bluePb = 60;
     int redPb = 50;
     int purplePb = 10;
+
+    void Start()
+    {
+        _as = GetComponent<AudioSource>();
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(RandomCreate);
+    }
 
     public void RandomCreate()
     {
@@ -23,6 +32,8 @@ public class Gacha : MonoBehaviour
         {
             return;
         }
+
+        _as.PlayOneShot(_as.clip);
 
         _probability = Random.Range(0, 100);
         if(_probability < purplePb)
@@ -41,14 +52,13 @@ public class Gacha : MonoBehaviour
         {
             number = 0;
         }          
-        //number = Random.Range(0, _itemCollection.Length);
 
         state.x = Random.Range(-200, 1200);
         state.y = Random.Range(500, 800);
         state.z = Random.Range(0, 1200);
         Instantiate(_itemCollection[number], state, Quaternion.identity);
         GameManager.CountCookie -= _gachacookie;
-        //_as.PlayOneShot(_as.clip);
+
         switch(number)
         {
             case 0:

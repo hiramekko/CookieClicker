@@ -13,7 +13,13 @@ public class ShopItem : MonoBehaviour
     Button _button;
     static ShopItemTable _item;
     StarData _data;
+    //[SerializeField]
     AudioSource _as;
+
+    void Start()
+    {
+        _as = GetComponent<AudioSource>();
+    }
 
     public void Setup(ShopItemTable item)
     {
@@ -25,16 +31,12 @@ public class ShopItem : MonoBehaviour
             {
                 return;
             }
+
+            _as.PlayOneShot(_as.clip);
             GameManager.Purchase(_item, Cost());
-            UpdateItem();
         });
 
-        //_button.onClick.AddListener(() =>
-        //{
-        //    _as.PlayOneShot(_as.clip);
-        //});
-
-        UpdateItem();
+        //UpdateItem();
     }
 
     static public long Cost()
